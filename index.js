@@ -3,7 +3,7 @@ var rewrite = function(pattern, visit) {
 
 	pattern = pattern.replace(/\*([^}]|$)/g, '{*}$1');
 	pattern = pattern.replace(/(\/)?(\.)?\{([^{]+)\}(?:\(([^)]+)\))?(\?)?(?=(.|$))/g, function(_, slash, dot, name, capture, optional, closed) {
-		if (!/^(\w|\d|[-.*])+$/g.test(name)) throw new Error('bad pattern name: '+name);
+		if (!/^(\w|\d|[_-.*])+$/g.test(name)) throw new Error('bad pattern name: '+name);
 		captures.push(visit({
 			slash:slash ? '\\/' : '',
 			dot:dot ? '\\.' : '',
