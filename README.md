@@ -1,6 +1,6 @@
 # murl
 
-murl is url pattern matching and replacing.
+murl is fast url pattern matching and replacing.
 It's avaiable through npm:
 
 	npm install murl
