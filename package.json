@@ -3,7 +3,7 @@
 	"version":"0.1.0",
 	"dependencies": {},
 	"repository": "git://github.com/mafintosh/murl",
-	"description":"murl is url pattern matching and replacing",
+	"description":"murl is fast url pattern matching and replacing",
 	"keywords": ["url", "pattern", "match", "replace"],
 	"author": "Mathias Buus Madsen <mathiasbuus@gmail.com>",
 	"scripts":{
