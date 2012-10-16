@@ -3,7 +3,7 @@ var rewrite = function(pattern, visit) {
 
 	pattern = pattern.replace(/\*([^}]|$)/g, '{*}$1');
 	pattern = pattern.replace(/(\/)?(\.)?\{([^{]+)\}(?:\(([^)]+)\))?(\?)?(?=(.|$))/g, function(_, slash, dot, name, capture, optional, closed) {
-		if (!/^(\w|\d|[_-.*])+$/g.test(name)) throw new Error('bad pattern name: '+name);
+		if (!/^(\w|\d|[_\-.*])+$/g.test(name)) throw new Error('bad pattern name: '+name);
 		captures.push(visit({
 			slash:slash ? '\\/' : '',
 			dot:dot ? '\\.' : '',
@@ -44,7 +44,7 @@ var matcher = function(pattern) {
 	var src = 'var pattern=/^'+pattern+'[\\/]?$/i;\nvar match=str.match(pattern);\ntry { return match && {';
 	for (var i = 0; i < names.length; i++) {
 		if (names[i] === '*') {
-			src += '"*":match['+(i+1)+'],"glob":match['+(i+1)+']';
+			src += '"*":match['+(i+1)+'],"glob":decodeURIComponent(match['+(i+1)+'])';
 		} else {
 			src += '"'+names[i]+'":decodeURIComponent(match['+(i+1)+'])';
 		}
