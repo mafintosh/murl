@@ -20,6 +20,12 @@ var rewrite = function(pattern, visit) {
 	});
 };
 var replacer = function(pattern) {
+	if (!pattern) {
+		return function() {
+			return '';
+		};
+	}
+
 	pattern = 'return "'+rewrite(pattern, function(params) {
 		return params.slash+params.dot+(params.name === '*' ? '"+params["*"]+"' : '"+encodeURIComponent(params["'+params.name+'"])+"');
 	})+'";';
