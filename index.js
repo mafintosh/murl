@@ -13,7 +13,7 @@ var rewrite = function(pattern, visit) {
 			closed:closed === '' || closed === '/'
 		}));
 		return '@';
-	})
+	});
 
 	return pattern.replace(/([\\\/."])/g, '\\$1').replace(/@/g, function() {
 		return captures.shift();
@@ -37,7 +37,7 @@ var matcher = function(pattern) {
 		return function() {
 			return {};
 		};
-	};
+	}
 
 	var names = [];
 	pattern = rewrite(pattern, function(params) {

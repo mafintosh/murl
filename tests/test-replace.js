@@ -5,6 +5,9 @@ var test = function(pattern, opt, eq) {
 	assert.equal(murl(pattern)(opt), eq);
 };
 
+test(undefined, {}, '');
+test(undefined, {test:42}, '');
+
 test('/hello', {}, '/hello');
 test('/{hello}', {hello:'hello'}, '/hello');
 test('/{hello}', {hello:'hello world'}, '/hello%20world');
