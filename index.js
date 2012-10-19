@@ -50,7 +50,7 @@ var matcher = function(pattern) {
 	var src = 'var pattern=/^'+pattern+'[\\/]?$/i;\nvar match=str.match(pattern);\ntry { return match && {';
 	for (var i = 0; i < names.length; i++) {
 		if (names[i] === '*') {
-			src += '"*":match['+(i+1)+'],"glob":decodeURIComponent(match['+(i+1)+'])';
+			src += '"*":match['+(i+1)+'] || "","glob":decodeURIComponent(match['+(i+1)+'] || "")';
 		} else {
 			src += '"'+names[i]+'":decodeURIComponent(match['+(i+1)+'])';
 		}
