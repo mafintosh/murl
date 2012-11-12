@@ -1,6 +1,6 @@
 {
 	"name":"murl",
-	"version":"0.1.4",
+	"version":"0.2.0",
 	"dependencies": {},
 	"repository": "git://github.com/mafintosh/murl",
 	"description":"murl is fast url pattern matching and replacing",
