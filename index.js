@@ -27,7 +27,7 @@ var replacer = function(pattern) {
 	}
 
 	pattern = 'return "'+rewrite(pattern, function(params) {
-		return params.slash+params.dot+(params.name === '*' ? '"+params["*"]+"' : '"+encodeURIComponent(params["'+params.name+'"])+"');
+		return params.slash+params.dot+'"+params["'+params.name+'"]+"';
 	})+'";';
 
 	return new Function('params',pattern.replace(/\+"";$/, ';'));
@@ -47,16 +47,16 @@ var matcher = function(pattern) {
 		return (params.closed ? '(?:'+params.slash+params.dot : params.slash+'(?:'+params.dot)+'('+params.capture+'))'+params.optional;
 	});
 
-	var src = 'var pattern=/^'+pattern+'[\\/]?$/i;\nvar match=str.match(pattern);\ntry { return match && {';
+	var src = 'var pattern=/^'+pattern+'[\\/]?$/i;\nvar match=str.match(pattern);\nreturn match && {';
 	for (var i = 0; i < names.length; i++) {
 		if (names[i] === '*') {
-			src += '"*":match['+(i+1)+'] || "","glob":decodeURIComponent(match['+(i+1)+'] || "")';
+			src += '"*":match['+(i+1)+'] || "","glob":match['+(i+1)+'] || ""';
 		} else {
-			src += '"'+names[i]+'":decodeURIComponent(match['+(i+1)+'])';
+			src += '"'+names[i]+'":match['+(i+1)+']';
 		}
 		src += (i+1 < names.length ? ',' : '');
 	}
-	src += '}; } catch (err) { return null; }';
+	src += '};';
 
 	return new Function('str', src);
 };
