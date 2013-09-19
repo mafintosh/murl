@@ -19,7 +19,7 @@ var rewrite = function(pattern, visit) {
 		return captures.shift();
 	});
 };
-var replacer = function(pattern) {
+var replacer = function(pattern, opts) {
 	if (!pattern) {
 		return function() {
 			return '';
@@ -32,7 +32,7 @@ var replacer = function(pattern) {
 
 	return new Function('params',pattern.replace(/\+"";$/, ';'));
 };
-var matcher = function(pattern) {
+var matcher = function(pattern, opts) {
 	if (!pattern) {
 		return function() {
 			return {};
@@ -47,7 +47,8 @@ var matcher = function(pattern) {
 		return (params.closed ? '(?:'+params.slash+params.dot : params.slash+'(?:'+params.dot)+'('+params.capture+'))'+params.optional;
 	});
 
-	var src = 'var pattern=/^'+pattern+'[\\/]?$/i;\nvar match=str.match(pattern);\nreturn match && {';
+	var end = opts.strict ? '' : '[\\/]?';
+	var src = 'var pattern=/^'+pattern+end+'$/i;\nvar match=str.match(pattern);\nreturn match && {';
 	for (var i = 0; i < names.length; i++) {
 		if (names[i] === '*') {
 			src += '"*":match['+(i+1)+'] || "","glob":match['+(i+1)+'] || ""';
@@ -61,9 +62,11 @@ var matcher = function(pattern) {
 	return new Function('str', src);
 };
 
-module.exports = function(pattern) {
-	var match = matcher(pattern);
-	var replace = replacer(pattern);
+module.exports = function(pattern, opts) {
+	if (!opts) opts = {};
+
+	var match = matcher(pattern, opts);
+	var replace = replacer(pattern, opts);
 
 	return function(url) {
 		return (typeof url === 'string' ? match : replace)(url);
