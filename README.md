@@ -41,6 +41,17 @@ Use `*` to match anything
 
 `murl('/*')`: matches `/a`, `/a/b/c` and so on
 
+## Strict mode
+
+Per default murl will disregard trailing `/` from the input string.
+Pass `{strict:true}` to disable this.
+
+``` js
+var pattern = murl('/{hello}', {strict:true});
+
+console.log(pattern('/world/')); // returns null
+console.log(pattern('/world'))   // return {hello:'world'}
+```
 
 ## License
 
