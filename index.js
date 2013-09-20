@@ -67,8 +67,19 @@ module.exports = function(pattern, opts) {
 
 	var match = matcher(pattern, opts);
 	var replace = replacer(pattern, opts);
+	var vars = {};
 
-	return function(url) {
+	var fn = function(url) {
 		return (typeof url === 'string' ? match : replace)(url);
 	};
+
+	rewrite(pattern || '', function(params) {
+		vars[params.name] = true;
+	});
+
+	if (vars['*']) vars.glob = true;
+	fn.variables = Object.keys(vars);
+	fn.pattern = pattern || '';
+
+	return fn;
 };
