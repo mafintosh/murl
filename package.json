@@ -4,7 +4,14 @@
 	"dependencies": {},
 	"repository": "git://github.com/mafintosh/murl",
 	"description":"murl is fast url pattern matching and replacing",
-	"keywords": ["url", "pattern", "match", "replace"],
+	"keywords": [
+		"url",
+		"routing",
+		"pattern",
+		"matching",
+		"match",
+		"replace"
+	],
 	"author": "Mathias Buus Madsen <mathiasbuus@gmail.com>",
 	"scripts":{
 		"test":"node tests"
